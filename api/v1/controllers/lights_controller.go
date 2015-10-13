@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	// "flag"
+	"flag"
 	// "github.com/gorilla/mux"
-	// "github.com/kidoman/embd"
-	"fmt"
+	// "fmt"
+	"github.com/kidoman/embd"
 	"net/http"
 )
 
@@ -20,4 +20,6 @@ func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Re
 
 	embd.SetDirection(17, embd.Out)
 	embd.DigitalWrite(17, embd.High)
+	embd.SetDirection(17, embd.Out)
+	embd.DigitalWrite(17, embd.Low)
 }
