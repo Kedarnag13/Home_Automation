@@ -12,6 +12,12 @@ type LightsController struct{}
 
 var Lights LightsController
 
-func (l *LightsController) Check_light_status(rw http.ResponseWriter, req *http.Request) {
-	fmt.Println("Am here")
+func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Request) {
+	flag.Parse()
+
+	embd.InitGPIO()
+	defer embd.CloseGPIO()
+
+	embd.SetDirection(17, embd.Out)
+	embd.DigitalWrite(17, embd.High)
 }
