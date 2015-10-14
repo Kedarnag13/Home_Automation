@@ -3,10 +3,15 @@ package controllers
 import (
 	"flag"
 	// "github.com/gorilla/mux"
-	// "fmt"
+	"fmt"
 	"github.com/kidoman/embd"
+_ "github.com/kidoman/embd/host/all"
 	"net/http"
-	"time"
+"io/ioutil"
+//"time"
+"log"
+"encoding/json"
+	"github.com/kedarnag13/Home_Automation/api/v1/models"
 )
 
 type LightsController struct{}
@@ -15,10 +20,9 @@ var Lights LightsController
 
 func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Request) {
 	flag.Parse()
-	embd.InitGPIO()
-
+	
 	body, err := ioutil.ReadAll(req.Body)
-	flag := 1
+	
 	var lig models.Light
 
 	if err != nil {
@@ -29,7 +33,10 @@ func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Re
 		panic(err)
 	}
 	fmt.Println(lig.Pin_number)
-	if lig.Pin_number == 17 {
+	
+	
+	if lig.Status == true {
+		embd.InitGPIO()
 		embd.SetDirection(lig.Pin_number, embd.Out)
 		embd.DigitalWrite(lig.Pin_number, embd.High)
 		b, err := json.Marshal(models.LightMessage{
@@ -42,6 +49,9 @@ func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Re
 		rw.Header().Set("Content-Type", "application/json")
 		rw.Write(b)
 	} else {
+		embd.InitGPIO()
+		embd.SetDirection(lig.Pin_number, embd.Out)
+		embd.DigitalWrite(lig.Pin_number, embd.Low)
 		b, err := json.Marshal(models.LightMessage{
 			Success: "false",
 			Message: "Light did not blink",
