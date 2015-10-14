@@ -9,7 +9,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/lights/{pin_no:[0-9]+}/{status:[0-9]+}", controllers.Lights.Toggle_led_light).Methods("GET")
+	r.HandleFunc("/lights", controllers.Lights.Toggle_led_light).Methods("POST")
 	http.Handle("/", r)
 
 	// HTTP Listening Port
