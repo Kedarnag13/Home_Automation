@@ -2,15 +2,17 @@ package controllers
 
 import (
 	// "bytes"
-	// "fmt"
+	"fmt"
 	"io"
 	// "io/ioutil"
 	// "mime/multipart"
-	"net/http"
+	// "net/http"
 	"os"
+	// "syscall"
 )
 
-func postFile(name string, description string, path string, target_path string, w http.ResponseWriter, r *http.Request) error {
+func postFile(name string, description string, source_path string, target_path string) error {
+	// Option 1
 	// resp, err := http.Get("0.0.0.0:3000/upload")
 	// if resp == nil {
 	// 	panic(err)
@@ -23,6 +25,8 @@ func postFile(name string, description string, path string, target_path string, 
 	// defer out.Close()
 	// io.Copy(out, resp.Body)
 	// return nil
+
+	// Option 2
 	// bodyBuf := &bytes.Buffer{}
 	// bodyWriter := multipart.NewWriter(bodyBuf)
 
@@ -61,38 +65,61 @@ func postFile(name string, description string, path string, target_path string, 
 	// }
 	// fmt.Println(resp.Status)
 	// fmt.Println(string(resp_body))
-	switch r.Method {
-	case "POST":
-		//parse the multipart form in the request
-		err := r.ParseMultipartForm(100000)
-		if err != nil {
-			panic(err)
-		}
 
-		//get a ref to the parsed multipart form
-		m := r.MultipartForm
+	// Option 3
+	// switch r.Method {
+	// case "POST":
+	// 	//parse the multipart form in the request
+	// 	err := r.ParseMultipartForm(100000)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
 
-		//get the *fileheaders
-		//for each fileheader, get a handle to the actual file
-		files := m.File["myfiles"]
-		for i, _ := range files {
-			//for each fileheader, get a handle to the actual file
-			file, err := files[i].Open()
-			defer file.Close()
-			if err != nil {
-				panic(err)
-			}
-			//create destination file making sure the path is writeable.
-			dst, err := os.Create(target_path)
-			defer dst.Close()
-			if err != nil {
-				panic(err)
-			}
-			//copy the uploaded file to the destination file
-			if _, err := io.Copy(dst, file); err != nil {
-				panic(err)
-			}
-		}
+	// 	//get a ref to the parsed multipart form
+	// 	m := r.MultipartForm
+
+	// 	//get the *fileheaders
+	// 	//for each fileheader, get a handle to the actual file
+	// 	files := m.File["myfiles"]
+	// 	for i, _ := range files {
+	// 		//for each fileheader, get a handle to the actual file
+	// 		file, err := files[i].Open()
+	// 		defer file.Close()
+	// 		if err != nil {
+	// 			panic(err)
+	// 		}
+	// 		//create destination file making sure the path is writeable.
+	// 		dst, err := os.Create(target_path)
+	// 		defer dst.Close()
+	// 		if err != nil {
+	// 			panic(err)
+	// 		}
+	// 		//copy the uploaded file to the destination file
+	// 		if _, err := io.Copy(dst, file); err != nil {
+	// 			panic(err)
+	// 		}
+	// 	}
+	// }
+	// return nil
+
+	// Option 4
+	in, err := os.Open(source_path)
+	if err != nil {
+		panic(err)
 	}
-	return nil
+	defer in.Close()
+	// out, err := os.OpenFile(target_path, syscall.O_CREAT|syscall.O_EXCL, 0666)
+	out, err := os.Create(target_path)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("In:", in)
+	fmt.Println("Out:", out)
+	defer out.Close()
+	_, err = io.Copy(out, in)
+	cerr := out.Close()
+	if err != nil {
+		panic(err)
+	}
+	return cerr
 }

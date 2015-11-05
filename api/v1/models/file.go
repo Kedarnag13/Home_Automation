@@ -3,6 +3,6 @@ package models
 type Upload struct {
 	Name        string
 	Description string
-	Path        string
+	Source_path string
 	Target_path string
 }

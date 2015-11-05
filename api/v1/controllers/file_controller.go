@@ -30,5 +30,5 @@ func (f *FileController) Upload(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	postFile(file.Name, file.Description, file.Path, file.Target_path, rw, req)
+	postFile(file.Name, file.Description, file.Source_path, file.Target_path)
 }
