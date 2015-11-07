@@ -36,7 +36,7 @@ func (f *FileController) Upload(rw http.ResponseWriter, req *http.Request) {
 		fmt.Println("File copied successfully!")
 	}
 	// Shell command to move to that directory where the song is stored
-	command := sh.Command("cd", sh.Dir("/Users/kedarnag/Downloads")).Command("sudo python py/synchronized_lights.py --file=").Run()
+	command := sh.Command("cd", sh.Dir("/Users/kedarnag/Downloads")).Command("sudo python py/synchronized_lights.py --file=").SetInput(file.Target_path).Run()
 	// Python code to play and sample the song, will be called by shell commands.
 	if command == nil {
 		panic(err)
