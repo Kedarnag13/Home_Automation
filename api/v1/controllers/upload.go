@@ -118,6 +118,7 @@ func postFile(name string, description string, source_path string, target_path s
 	defer out.Close()
 	_, err = io.Copy(out, in)
 	cerr := out.Close()
+	fmt.Println(cerr)
 	if err != nil {
 		panic(err)
 	}
