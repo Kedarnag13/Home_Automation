@@ -31,12 +31,14 @@ func (f *FileController) Upload(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Entering postFile")
 	err = postFile(file.Name, file.Description, file.Source_path, file.Target_path)
+	fmt.Println("Exiting postFile")
 	if err == nil {
 		fmt.Println("File copied successfully!")
 	}
 	// Shell command to move to that directory where the song is stored + Python code to play and sample the song, will be called by shell commands.
-	command := sh.Command("cd", sh.Dir("/Users/kedarnag/Downloads")).Command("sudo python py/synchronized_lights.py --file=").SetInput(file.Target_path).Run()
+	command := sh.Command("cd", sh.Dir("/home/ubuntu/Desktop")).Command("sudo python py/synchronized_lights.py --file=").SetInput(file.Target_path).Run()
 	if command == nil {
 		panic(err)
 	}
