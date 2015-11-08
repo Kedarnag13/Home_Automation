@@ -42,4 +42,6 @@ func (f *FileController) Upload(rw http.ResponseWriter, req *http.Request) {
 	if command == nil {
 		panic(err)
 	}
+	rw.Header().Set("Connection", "close")
+	fmt.Println(req.Close)
 }
