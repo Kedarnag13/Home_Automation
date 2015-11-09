@@ -5,7 +5,7 @@ import (
 	// "github.com/gorilla/mux"
 	"fmt"
 	"github.com/kidoman/embd"
-	// _ "github.com/kidoman/embd/host/all"
+	_ "github.com/kidoman/embd/host/all"
 	"io/ioutil"
 	"net/http"
 	//"time"
