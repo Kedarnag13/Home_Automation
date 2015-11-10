@@ -8,6 +8,7 @@ import (
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"github.com/kidoman/embd"
 	_ "github.com/kidoman/embd/host/all"
+	forecast "github.com/mlbright/forecast/v2"
 	"log"
 	"net/http"
 )
@@ -17,6 +18,27 @@ type WeatherController struct{}
 var Weather WeatherController
 
 func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
+
+	var geo models.GeoLocation
+	vars := mux.Vars(req)
+	latitude := vars["latitude"]
+	geo.latitude = latitude
+	longitude := vars["longitude"]
+	geo.longitude = longitude
+	var lig models.Light
+
+	keybytes, err := ioutil.ReadFile("67fb1806008cd6d8610a12f9531c4a15")
+	if err != nil {
+		log.Fatal(err)
+	}
+	key := string(keybytes)
+	key = strings.TrimSpace(key)
+
+	f, err := forecast.Get(key, geo.latitude, geo.longitude, "now", forecast.CA)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("wind speed: %.2f\n", f.Currently.WindSpeed)
 
 	flag.Parse()
 	embd.InitGPIO()
