@@ -11,7 +11,7 @@ import (
 
 type WeatherController struct{}
 
-var Weather FileController
+var Weather WeatherController
 
 func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 	sensorType := dht.DHT11
