@@ -59,6 +59,8 @@ func (w *WindController) Monitor_wind_velocity(rw http.ResponseWriter, req *http
 	if err != nil {
 		log.Fatal(err)
 	}
+	rw.Header().Set("Content-Type", "application/json")
+	rw.Write(b)
 }
 
 type TemperatureController struct{}
