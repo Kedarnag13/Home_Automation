@@ -20,7 +20,7 @@ func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 		log.Fatal(err)
 	}
 	// Print temperature and humidity
-	fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
+	fmt.Printf("Temperature = %f*C, Humidity = %v%% (retried %d times)\n",
 		temperature, humidity, retried)
 	b, err := json.Marshal(models.WeatherMessage{
 		Success:     "True",
