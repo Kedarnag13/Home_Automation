@@ -13,6 +13,6 @@ type WeatherLEDMessage struct {
 }
 
 type GeoLocation struct {
-	Latitude  float32
-	Longitude float32
+	Latitude  string
+	Longitude string
 }
