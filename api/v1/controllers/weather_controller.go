@@ -71,7 +71,7 @@ func (t *TemperatureController) Monitor_temperature_humidity(rw http.ResponseWri
 
 	flag.Parse()
 	embd.InitGPIO()
-	var lig models.Light
+	// var lig models.Light
 
 	sensorType := dht.DHT11
 	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, 4, true, 10)
@@ -92,29 +92,29 @@ func (t *TemperatureController) Monitor_temperature_humidity(rw http.ResponseWri
 	}
 	rw.Header().Set("Content-Type", "application/json")
 	rw.Write(b)
-	if temperature <= 22 {
-		embd.SetDirection(lig.Pin_number, embd.Out)
-		embd.DigitalWrite(lig.Pin_number, embd.High)
-		b, err := json.Marshal(models.WeatherLEDMessage{
-			Success: "True",
-			Message: "It's getting cooler!!",
-		})
-		if err != nil {
-			log.Fatal(err)
-		}
-		rw.Header().Set("Content-Type", "application/json")
-		rw.Write(b)
-	} else if temperature > 22 {
-		embd.SetDirection(lig.Pin_number, embd.Out)
-		embd.DigitalWrite(lig.Pin_number, embd.High)
-		b, err := json.Marshal(models.WeatherLEDMessage{
-			Success: "True",
-			Message: "It's getting hotter!!",
-		})
-		if err != nil {
-			log.Fatal(err)
-		}
-		rw.Header().Set("Content-Type", "application/json")
-		rw.Write(b)
-	}
+	// if temperature <= 22 {
+	// 	embd.SetDirection(lig.Pin_number, embd.Out)
+	// 	embd.DigitalWrite(lig.Pin_number, embd.High)
+	// 	b, err := json.Marshal(models.WeatherLEDMessage{
+	// 		Success: "True",
+	// 		Message: "It's getting cooler!!",
+	// 	})
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	rw.Header().Set("Content-Type", "application/json")
+	// 	rw.Write(b)
+	// } else if temperature > 22 {
+	// 	embd.SetDirection(lig.Pin_number, embd.Out)
+	// 	embd.DigitalWrite(lig.Pin_number, embd.High)
+	// 	b, err := json.Marshal(models.WeatherLEDMessage{
+	// 		Success: "True",
+	// 		Message: "It's getting hotter!!",
+	// 	})
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	rw.Header().Set("Content-Type", "application/json")
+	// 	rw.Write(b)
+	// }
 }
