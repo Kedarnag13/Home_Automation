@@ -1,17 +1,15 @@
 package controllers
 
 import (
+	"encoding/json"
 	"flag"
-	// "github.com/gorilla/mux"
 	"fmt"
+	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"github.com/kidoman/embd"
 	_ "github.com/kidoman/embd/host/all"
 	"io/ioutil"
-	"net/http"
-	//"time"
-	"encoding/json"
-	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"log"
+	"net/http"
 )
 
 type LightsController struct{}
