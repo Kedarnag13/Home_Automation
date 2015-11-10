@@ -5,12 +5,15 @@ import (
 	"flag"
 	"fmt"
 	"github.com/d2r2/go-dht"
+	"github.com/gorilla/mux"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"github.com/kidoman/embd"
 	_ "github.com/kidoman/embd/host/all"
 	forecast "github.com/mlbright/forecast/v2"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type WeatherController struct{}
