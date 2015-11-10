@@ -11,7 +11,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/lights", controllers.Lights.Toggle_led_light).Methods("POST")
 	r.HandleFunc("/upload", controllers.File.Upload).Methods("POST")
-	r.HandleFunc("/monitor_temp_humidity_wind_speed/{latitude:[0-9][.][0-9]+}/{longitude:[0-9][.][0-9]+}", controllers.Weather.Monitor).Methods("GET")
+	r.HandleFunc("/monitor_temp_humidity_wind_speed/{latitude:[0-9.0-9]+}/{longitude:[0-9.0-9]+}", controllers.Weather.Monitor).Methods("GET")
 	// filename := "/Users/kedarnag/Desktop/ROR - Training Material.docx"
 	// postFile(filename, "0.0.0.0:3000")
 	http.Handle("/", r)
