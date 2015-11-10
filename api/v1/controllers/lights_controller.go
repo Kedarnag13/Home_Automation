@@ -29,7 +29,6 @@ func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Re
 	if err != nil {
 		panic(err)
 	}
-	defer embd.CloseGPIO()
 	err = json.Unmarshal(body, &lig)
 	if err != nil {
 		panic(err)
