@@ -13,14 +13,15 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
-type WeatherController struct{}
+type WindController struct{}
 
-var Weather WeatherController
+var Wind WindController
 
-func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
+func (w *WindController) Monitor_wind_velocity(rw http.ResponseWriter, req *http.Request) {
 
 	// var geo models.GeoLocation
 	vars := mux.Vars(req)
@@ -28,7 +29,6 @@ func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 	lat := string(latitude)
 	longitude := vars["longitude"]
 	long := string(longitude)
-	var lig models.Light
 
 	keybytes, err := ioutil.ReadFile("api_key.txt")
 	if err != nil {
@@ -41,10 +41,35 @@ func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("wind speed: %.2f\n", f.Currently.WindSpeed)
+	fmt.Println("Wind Velocity is:", f.Currently.WindSpeed)
+	float_lat, err := strconv.ParseFloat(lat, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
+	float_long, err := strconv.ParseFloat(long, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
+	b, err := json.Marshal(models.GeoLocation{
+		Latitude:  float_lat,
+		Longitude: float_long,
+		Success:   "True",
+		Message:   "Windspeed updated.",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+type TemperatureController struct{}
+
+var Temp TemperatureController
+
+func (w *WindController) Monitor_temmperature_humidity(rw http.ResponseWriter, req *http.Request) {
 
 	flag.Parse()
 	embd.InitGPIO()
+	var lig models.Light
 
 	sensorType := dht.DHT11
 	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, 4, true, 10)
