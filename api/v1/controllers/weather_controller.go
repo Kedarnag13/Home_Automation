@@ -25,9 +25,9 @@ func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 	var geo models.GeoLocation
 	vars := mux.Vars(req)
 	latitude := vars["latitude"]
-	geo.Latitude = latitude
+	geo.Latitude = string(latitude)
 	longitude := vars["longitude"]
-	geo.Longitude = longitude
+	geo.Longitude = string(longitude)
 	var lig models.Light
 
 	keybytes, err := ioutil.ReadFile("67fb1806008cd6d8610a12f9531c4a15")
