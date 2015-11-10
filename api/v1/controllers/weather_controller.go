@@ -67,7 +67,7 @@ type TemperatureController struct{}
 
 var Temp TemperatureController
 
-func (w *WindController) Monitor_temmperature_humidity(rw http.ResponseWriter, req *http.Request) {
+func (t *TemperatureController) Monitor_temperature_humidity(rw http.ResponseWriter, req *http.Request) {
 
 	flag.Parse()
 	embd.InitGPIO()
