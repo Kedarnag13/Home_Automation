@@ -11,6 +11,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/lights", controllers.Lights.Toggle_led_light).Methods("POST")
 	r.HandleFunc("/upload", controllers.File.Upload).Methods("POST")
+	r.HandleFunc("/monitor_temp_humidity", controllers.Weather.Monitor).Methods("GET")
 	// filename := "/Users/kedarnag/Desktop/ROR - Training Material.docx"
 	// postFile(filename, "0.0.0.0:3000")
 	http.Handle("/", r)

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/d2r2/go-dht"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
