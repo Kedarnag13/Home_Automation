@@ -22,7 +22,7 @@ var Weather WeatherController
 
 func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 
-	var geo models.GeoLocation
+	// var geo models.GeoLocation
 	vars := mux.Vars(req)
 	latitude := vars["latitude"]
 	lat := string(latitude)
