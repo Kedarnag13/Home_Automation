@@ -24,7 +24,7 @@ func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 		temperature, humidity, retried)
 	b, err := json.Marshal(models.WeatherMessage{
 		Success:     "True",
-		Message:     "Light blinked",
+		Message:     "Temperature and Humidity updated",
 		Temperature: temperature,
 		Humidity:    humidity,
 	})
