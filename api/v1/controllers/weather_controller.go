@@ -30,7 +30,7 @@ func (w *WeatherController) Monitor(rw http.ResponseWriter, req *http.Request) {
 	long := string(longitude)
 	var lig models.Light
 
-	keybytes, err := ioutil.ReadFile("67fb1806008cd6d8610a12f9531c4a15")
+	keybytes, err := ioutil.ReadFile("/Users/kedarnag/Documents/WorkSpace/GoLang/gopath/src/github.com/kedarnag13/Home_Automation/api_key.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
