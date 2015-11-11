@@ -29,8 +29,16 @@
 			"Rev": "47e8f450ef38c857cdd922ec08862ca9d65a1c6d"
 		},
 		{
+			"ImportPath": "github.com/jasonwinn/geocoder",
+			"Rev": "e1b3b6a2d440f06997b4d4bc3d091a3fb1249f6f"
+		},
+		{
 			"ImportPath": "github.com/kidoman/embd",
 			"Rev": "5065e49386ae53e601ef7a300934a37cc21fd3b6"
+		},
+		{
+			"ImportPath": "github.com/mlbright/forecast/v2",
+			"Rev": "781f7259c1b21cb70229a4f8474419900c7fe236"
 		},
 		{
 			"ImportPath": "github.com/op/go-logging",
