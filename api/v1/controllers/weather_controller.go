@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/d2r2/go-dht"
 	"github.com/jasonwinn/geocoder"
-	// "github.com/gorilla/mux"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"github.com/kidoman/embd"
 	_ "github.com/kidoman/embd/host/all"
