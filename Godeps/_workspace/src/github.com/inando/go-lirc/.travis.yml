@@ -1,0 +1,28 @@
+language: go
+go:
+- 1.4
+- tip
+before_install:
+- export LIRC_RUN_PATH=$TRAVIS_BUILD_DIR/lirc
+- export LIRC_SOCKET_PATH=$LIRC_RUN_PATH/lircd
+- env
+- sudo apt-get -qq update
+- sudo apt-get -qq install xsltproc autoconf libtool python3 python3-yaml man2html
+- git clone git://git.code.sf.net/p/lirc/git lirc
+- cd lirc
+- git checkout release
+- ./autogen.sh
+- ./configure
+- make
+- sudo make install
+- sudo ldconfig
+- lircd -v
+- cd ..
+- sudo cp ./lircdtest.conf /usr/local/etc/lirc/lircd.conf.d/
+- lircd --pidfile=$LIRC_RUN_PATH/lirc.pid --output=$LIRC_RUN_PATH/lircd --logfile=$LIRC_RUN_PATH/lirc.log --allow-simulate --driver simsend
+install:
+- go get -t -v ./...
+script:
+- go test -v ./...
+after_script:
+- cat $LIRC_RUN_PATH/lirc.log
