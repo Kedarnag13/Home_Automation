@@ -1,19 +1,14 @@
 package controllers
 
 import (
-	// "flag"
-	// "github.com/gorilla/mux"
-	"fmt"
-	// "github.com/kidoman/embd"
-	// _ "github.com/kidoman/embd/host/all"
-	// "bytes"
-	"io/ioutil"
-	"net/http"
-	//"time"
 	"encoding/json"
+	"fmt"
 	"github.com/codeskyblue/go-sh"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
-	// "log"
+	"github.com/kidoman/embd"
+	_ "github.com/kidoman/embd/host/all"
+	"io/ioutil"
+	"net/http"
 )
 
 type FileController struct{}
