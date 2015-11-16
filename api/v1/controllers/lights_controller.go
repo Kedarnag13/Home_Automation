@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"github.com/kidoman/embd"
-	// _ "github.com/kidoman/embd/host/all"
+	_ "github.com/kidoman/embd/host/all"
 	"io/ioutil"
 	"log"
 	"net/http"

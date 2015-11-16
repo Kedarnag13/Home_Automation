@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/codeskyblue/go-sh"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
-	// "github.com/kidoman/embd"
-	// _ "github.com/kidoman/embd/host/all"
+	"github.com/kidoman/embd"
+	_ "github.com/kidoman/embd/host/all"
 	"io/ioutil"
 	"net/http"
 )
