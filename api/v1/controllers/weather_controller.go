@@ -5,7 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"github.com/d2r2/go-dht"
-	"github.com/gorilla/mux"
+	"github.com/jasonwinn/geocoder"
+	// "github.com/gorilla/mux"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"github.com/kidoman/embd"
 	_ "github.com/kidoman/embd/host/all"
@@ -17,18 +18,19 @@ import (
 	"strings"
 )
 
-type WindController struct{}
+type WeatherController struct{}
 
-var Wind WindController
+var Weather WeatherController
 
-func (w *WindController) Monitor_wind_velocity(rw http.ResponseWriter, req *http.Request) {
-
-	// var geo models.GeoLocation
-	vars := mux.Vars(req)
-	latitude := vars["latitude"]
-	lat := string(latitude)
-	longitude := vars["longitude"]
-	long := string(longitude)
+func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Request) {
+	my_ip := get_my_ip()
+	query := my_ip
+	lat, lng, err := geocoder.Geocode(query)
+	if err != nil {
+		panic(err)
+	}
+	latitude := strconv.FormatFloat(lat, 'f', 6, 64)
+	longitude := strconv.FormatFloat(lng, 'f', 6, 64)
 
 	keybytes, err := ioutil.ReadFile("api_key.txt")
 	if err != nil {
@@ -37,24 +39,30 @@ func (w *WindController) Monitor_wind_velocity(rw http.ResponseWriter, req *http
 	key := string(keybytes)
 	key = strings.TrimSpace(key)
 
-	f, err := forecast.Get(key, lat, long, "now", forecast.CA)
+	f, err := forecast.Get(key, latitude, longitude, "now", forecast.CA)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Wind Velocity is:", f.Currently.WindSpeed)
-	float_lat, err := strconv.ParseFloat(lat, 32)
+	fmt.Printf("%s: %s\n", f.Timezone, f.Currently.Summary)
+	fmt.Printf("Humidity: %.2f\n", f.Currently.Humidity)
+	fmt.Printf("Temperature: %.2f Celsius\n", f.Currently.Temperature)
+	fmt.Printf("Wind Velocity is: %.2f km/h", f.Currently.WindSpeed)
+	float_lat, err := strconv.ParseFloat(latitude, 32)
 	if err != nil {
 		log.Fatal(err)
 	}
-	float_long, err := strconv.ParseFloat(long, 32)
+	float_long, err := strconv.ParseFloat(longitude, 32)
 	if err != nil {
 		log.Fatal(err)
 	}
 	b, err := json.Marshal(models.GeoLocation{
-		Latitude:  float_lat,
-		Longitude: float_long,
-		Success:   "True",
-		Message:   "Windspeed updated.",
+		Latitude:    float_lat,
+		Longitude:   float_long,
+		Temperature: f.Currently.Temperature,
+		Humidity:    f.Currently.Humidity,
+		Windspeed:   f.Currently.WindSpeed,
+		Success:     "True",
+		Message:     "Windspeed updated.",
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -62,6 +70,52 @@ func (w *WindController) Monitor_wind_velocity(rw http.ResponseWriter, req *http
 	rw.Header().Set("Content-Type", "application/json")
 	rw.Write(b)
 }
+
+// type WindController struct{}
+
+// var Wind WindController
+
+// func (w *WindController) Monitor_wind_velocity(rw http.ResponseWriter, req *http.Request) {
+
+// 	// var geo models.GeoLocation
+// 	vars := mux.Vars(req)
+// 	latitude := vars["latitude"]
+// 	lat := string(latitude)
+// 	longitude := vars["longitude"]
+// 	long := string(longitude)
+
+// 	keybytes, err := ioutil.ReadFile("api_key.txt")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	key := string(keybytes)
+// 	key = strings.TrimSpace(key)
+
+// 	f, err := forecast.Get(key, lat, long, "now", forecast.CA)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	fmt.Println("Wind Velocity is:", f.Currently.WindSpeed)
+// 	float_lat, err := strconv.ParseFloat(lat, 32)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	float_long, err := strconv.ParseFloat(long, 32)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	b, err := json.Marshal(models.GeoLocation{
+// 		Latitude:  float_lat,
+// 		Longitude: float_long,
+// 		Success:   "True",
+// 		Message:   "Windspeed updated.",
+// 	})
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	rw.Header().Set("Content-Type", "application/json")
+// 	rw.Write(b)
+// }
 
 type TemperatureController struct{}
 
