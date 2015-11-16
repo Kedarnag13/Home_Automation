@@ -38,7 +38,7 @@ func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Re
 		embd.DigitalWrite(lig.Pin_number, embd.High)
 		b, err := json.Marshal(models.LightMessage{
 			Success: "True",
-			Message: "Light blinked",
+			Message: "Switched On!!!",
 		})
 		if err != nil {
 			log.Fatal(err)
@@ -50,7 +50,7 @@ func (l *LightsController) Toggle_led_light(rw http.ResponseWriter, req *http.Re
 		embd.DigitalWrite(lig.Pin_number, embd.Low)
 		b, err := json.Marshal(models.LightMessage{
 			Success: "false",
-			Message: "Light did not blink",
+			Message: "Switched Off!!!",
 		})
 		if err != nil {
 			log.Fatal(err)
