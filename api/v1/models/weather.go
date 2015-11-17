@@ -18,6 +18,7 @@ type GeoLocation struct {
 	Temperature float64
 	Humidity    float64
 	Windspeed   float64
+	Climate     string
 	Success     string
 	Message     string
 }
