@@ -24,7 +24,7 @@ var Weather WeatherController
 func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Request) {
 	my_ip := get_my_ip()
 	query := my_ip
-	lat, lng, err := geocoder.Geocode(query)
+	lat, lng, err := geocoder.Geocode("Mysore")
 	if err != nil {
 		panic(err)
 	}
@@ -44,8 +44,10 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 	}
 	fmt.Printf("%s: %s\n", f.Timezone, f.Currently.Summary)
 	fmt.Printf("Humidity: %.2f\n", f.Currently.Humidity)
-	fmt.Printf("Temperature: %.2f Celsius\n", f.Currently.Temperature)
-	fmt.Printf("Wind Velocity is: %.2f km/h", f.Currently.WindSpeed)
+	fmt.Printf("Minimum Temperature: %.2f Celsius\n", f.Currently.Temperature)
+	fmt.Printf("Wind Velocity is: %.2f km/h \n", f.Currently.WindSpeed)
+	fmt.Println("Climate:\n", f.Daily.Icon)
+
 	float_lat, err := strconv.ParseFloat(latitude, 32)
 	if err != nil {
 		log.Fatal(err)
@@ -60,6 +62,7 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 		Temperature: f.Currently.Temperature,
 		Humidity:    f.Currently.Humidity,
 		Windspeed:   f.Currently.WindSpeed,
+		Climate:     f.Daily.Icon,
 		Success:     "True",
 		Message:     "Windspeed updated.",
 	})
@@ -126,25 +129,25 @@ func (t *TemperatureController) Monitor_temperature_humidity(rw http.ResponseWri
 	embd.InitGPIO()
 	// var lig models.Light
 
-	sensorType := dht.DHT11
-	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, 4, true, 10)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// Print temperature and humidity
-	fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
-		temperature, humidity, retried)
-	b, err := json.Marshal(models.WeatherMessage{
-		Success:     "True",
-		Message:     "Temperature and Humidity updated",
-		Temperature: temperature,
-		Humidity:    humidity,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	rw.Header().Set("Content-Type", "application/json")
-	rw.Write(b)
+	// sensorType := dht.DHT11
+	// temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, 4, true, 10)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// // Print temperature and humidity
+	// fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
+	// 	temperature, humidity, retried)
+	// b, err := json.Marshal(models.WeatherMessage{
+	// 	Success:     "True",
+	// 	Message:     "Temperature and Humidity updated",
+	// 	Temperature: temperature,
+	// 	Humidity:    humidity,
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// rw.Header().Set("Content-Type", "application/json")
+	// rw.Write(b)
 	// if temperature <= 22 {
 	// 	embd.SetDirection(lig.Pin_number, embd.Out)
 	// 	embd.DigitalWrite(lig.Pin_number, embd.High)
