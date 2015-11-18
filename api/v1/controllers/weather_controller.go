@@ -24,7 +24,8 @@ var Weather WeatherController
 func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Request) {
 	// my_ip := get_my_ip()
 	// query := my_ip
-	lat, lng, err := geocoder.Geocode("Mysore")
+	city_name := "Mysore"
+	lat, lng, err := geocoder.Geocode(city_name)
 	if err != nil {
 		panic(err)
 	}
@@ -44,7 +45,7 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 	}
 	fmt.Printf("%s: %s\n", f.Timezone, f.Currently.Summary)
 	fmt.Printf("Humidity: %.2f\n", f.Currently.Humidity)
-	fmt.Printf("Minimum Temperature: %.2f Celsius\n", f.Currently.Temperature)
+	fmt.Printf("Temperature: %.2f Celsius\n", f.Currently.Temperature)
 	fmt.Printf("Wind Velocity is: %.2f km/h \n", f.Currently.WindSpeed)
 	fmt.Println("Climate:\n", f.Daily.Icon)
 
@@ -63,6 +64,7 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 		Humidity:    f.Currently.Humidity,
 		Windspeed:   f.Currently.WindSpeed,
 		Climate:     f.Daily.Icon,
+		City:        city_name,
 		Success:     "True",
 		Message:     "Windspeed updated.",
 	})
