@@ -45,7 +45,7 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 	}
 	fmt.Printf("%s: %s\n", f.Timezone, f.Currently.Summary)
 	fmt.Printf("Humidity: %v%%\n", f.Currently.Humidity*100)
-	fmt.Printf("Temperature: %v Celsius\n", f.Currently.Temperature)
+	fmt.Printf("Temperature: %v*C\n", f.Currently.Temperature)
 	fmt.Printf("Wind Velocity is: %v km/h \n", f.Currently.WindSpeed)
 	fmt.Println("Climate:\n", f.Daily.Icon)
 
