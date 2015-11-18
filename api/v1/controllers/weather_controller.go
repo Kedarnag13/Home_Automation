@@ -22,8 +22,8 @@ type WeatherController struct{}
 var Weather WeatherController
 
 func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Request) {
-	my_ip := get_my_ip()
-	query := my_ip
+	// my_ip := get_my_ip()
+	// query := my_ip
 	lat, lng, err := geocoder.Geocode("Mysore")
 	if err != nil {
 		panic(err)
