@@ -45,8 +45,8 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 	}
 	fmt.Printf("%s: %s\n", f.Timezone, f.Currently.Summary)
 	fmt.Printf("Humidity: %.2f\n", f.Currently.Humidity)
-	fmt.Printf("Temperature: %.2f Celsius\n", f.Currently.Temperature)
-	fmt.Printf("Wind Velocity is: %.2f km/h \n", f.Currently.WindSpeed)
+	fmt.Printf("Temperature: %v Celsius\n", f.Currently.Temperature)
+	fmt.Printf("Wind Velocity is: %v km/h \n", f.Currently.WindSpeed)
 	fmt.Println("Climate:\n", f.Daily.Icon)
 
 	float_lat, err := strconv.ParseFloat(latitude, 32)
