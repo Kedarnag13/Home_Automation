@@ -5,7 +5,7 @@ import (
 	"github.com/chbmuc/lirc"
 	"log"
 	"net/http"
-	"time"
+	// "time"
 )
 
 type AppliancesController struct{}
