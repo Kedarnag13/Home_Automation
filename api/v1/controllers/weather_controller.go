@@ -43,12 +43,14 @@ func (w *WeatherController) Get_information(rw http.ResponseWriter, req *http.Re
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%s: %s\n", f.Timezone, f.Currently.Summary)
-	fmt.Printf("Humidity: %v%%\n", f.Currently.Humidity*100)
 	fmt.Printf("Temperature: %v*C\n", f.Currently.Temperature)
-	fmt.Printf("Wind Velocity is: %v km/h \n", f.Currently.WindSpeed)
-	fmt.Println("Climate:\n", f.Daily.Icon)
-
+	for i := 0; i <= 6; i++ {
+		fmt.Printf("Windspeed: %v km/h \n", f.Daily.Data[i].WindSpeed)
+		fmt.Printf("Climate: %v\n", f.Daily.Data[i].Icon)
+		fmt.Printf("Humidity: %v%% \n", f.Daily.Data[i].Humidity*100)
+		fmt.Printf("Minimum Temperature: %v*C \n", f.Daily.Data[i].TemperatureMin)
+		fmt.Printf("Maximum Temperature: %v*C \n", f.Daily.Data[i].TemperatureMax)
+	}
 	float_lat, err := strconv.ParseFloat(latitude, 32)
 	if err != nil {
 		log.Fatal(err)
