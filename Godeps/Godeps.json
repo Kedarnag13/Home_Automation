@@ -13,6 +13,10 @@
 			"Rev": "3d593d477915b4d2f2e74b2e041495345647a46b"
 		},
 		{
+			"ImportPath": "github.com/d2r2/go-dht",
+			"Rev": "e0c37f6370acad06f117e134d1dc35d396236171"
+		},
+		{
 			"ImportPath": "github.com/golang/glog",
 			"Rev": "fca8c8854093a154ff1eb580aae10276ad6b1b5f"
 		},
@@ -25,10 +29,6 @@
 			"Rev": "47e8f450ef38c857cdd922ec08862ca9d65a1c6d"
 		},
 		{
-			"ImportPath": "github.com/inando/go-lirc",
-			"Rev": "c090e21288016ee51c884028a056ddacb760c31d"
-		},
-		{
 			"ImportPath": "github.com/jasonwinn/geocoder",
 			"Rev": "e1b3b6a2d440f06997b4d4bc3d091a3fb1249f6f"
 		},
@@ -39,6 +39,14 @@
 		{
 			"ImportPath": "github.com/mlbright/forecast/v2",
 			"Rev": "781f7259c1b21cb70229a4f8474419900c7fe236"
+		},
+		{
+			"ImportPath": "github.com/ninjasphere/go-samsung-tv",
+			"Rev": "c9741ffaf7587145b26d246e5fdbaa1305b54cf9"
+		},
+		{
+			"ImportPath": "github.com/op/go-logging",
+			"Rev": "e8d5414f0947014548c2334044a0fac13187dfee"
 		}
 	]
 }
