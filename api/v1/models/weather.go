@@ -13,6 +13,7 @@ type WeatherLEDMessage struct {
 }
 
 type GeoLocation struct {
+	WeatherForWeek	DaysOfWeek
 	Latitude    float64
 	Longitude   float64
 	Temperature float64
@@ -22,4 +23,22 @@ type GeoLocation struct {
 	City        string
 	Success     string
 	Message     string
+}
+
+type DailyWeather struct {
+	Windspeed float64
+	Climate string
+	Humidity float64
+	Minimum_temp float64
+	Maximum_temp float64
+}
+
+type DaysOfWeek struct {
+	Sunday	DailyWeather
+	Monday	DailyWeather
+	Tuesday	DailyWeather
+	Wednesday	DailyWeather
+	Thursday	DailyWeather
+	Friday		DailyWeather
+	Saturday	DailyWeather
 }
