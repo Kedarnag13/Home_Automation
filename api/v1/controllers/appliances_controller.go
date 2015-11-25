@@ -84,9 +84,9 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	fmt.Println("Code:", code)
 	fmt.Println("Name:", name)
 	go ir.Run()
-	err = ir.Send(event)
+	err = ir.Send("micromax KEY_POWER")
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 	}
 }
 
