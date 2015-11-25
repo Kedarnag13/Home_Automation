@@ -2,8 +2,7 @@ package controllers
 
 import (
 	// "github.com/ninjasphere/go-samsung-tv"
-	// "github.com/chbmuc/lirc"
-	"github.com/inando/go-lirc"
+	"github.com/chbmuc/lirc"
 	"log"
 	"net/http"
 	// "time"
@@ -14,13 +13,12 @@ type AppliancesController struct{}
 var Appliances AppliancesController
 
 func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Request) {
-	ir, err := lirc.New()
-	// ir, err := lirc.Init("/var/run/lirc/lircd")
+	ir, err := lirc.Init("/var/run/lirc/lircd")
 	if err != nil {
 		panic(err)
 	}
-	// ir.Handle("", "KEY_POWER", keyPower)
-	// go ir.Run()
+	ir.Handle("", "KEY_POWER", keyPower)
+	go ir.Run()
 	// samsung.EnableLogging = true
 	// tv := samsung.TV{
 	// 	Host:            "192.168.1.21",
@@ -52,6 +50,6 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// }
 }
 
-// func keyPower(event lirc.Event) {
-// 	log.Println("Power Key Pressed")
-// }
+func keyPower(event lirc.Event) {
+	log.Println("Power Key Pressed")
+}
