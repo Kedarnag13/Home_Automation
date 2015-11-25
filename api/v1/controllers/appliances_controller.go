@@ -18,8 +18,10 @@ var Appliances AppliancesController
 
 func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Request) {
 
-	var tv models.Tv
 	body, err := ioutil.ReadAll(req.Body)
+
+	var tv models.Tv
+
 	if err != nil {
 		panic(err)
 	}
