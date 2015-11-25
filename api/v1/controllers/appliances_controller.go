@@ -18,7 +18,8 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 		panic(err)
 	}
 	ir.Handle("", "KEY_POWER", keyPower)
-	go ir.Run()
+	ir.Handle("", "KEY_POWER", key1)
+	ir.Run()
 	// samsung.EnableLogging = true
 	// tv := samsung.TV{
 	// 	Host:            "192.168.1.21",
@@ -52,4 +53,8 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 
 func keyPower(event lirc.Event) {
 	log.Println("Power Key Pressed")
+}
+
+func key1(event lirc.Event) {
+	log.Println("Key 1 Pressed")
 }
