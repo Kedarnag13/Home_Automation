@@ -40,6 +40,8 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// 	keyPower(w, r, tv.Key_code, tv.Key_name)
 	// })
 	go ir.Run()
+	reply := ir.Command(`LIST micromax ""`)
+	fmt.Println(reply.DataLength, reply.Data)
 	err = ir.Send("micromax KEY_POWER")
 	if err != nil {
 		log.Println(err)
