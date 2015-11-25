@@ -18,8 +18,9 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 		panic(err)
 	}
 	ir.Handle("", "KEY_POWER", keyPower)
-	ir.Handle("", "KEY_POWER", key1)
-	ir.Run()
+	go ir.Run()
+	ir.Handle("", "KEY_1", key1)
+	go ir.Run()
 	// samsung.EnableLogging = true
 	// tv := samsung.TV{
 	// 	Host:            "192.168.1.21",
