@@ -7,7 +7,7 @@ import (
 	"github.com/chbmuc/lirc"
 	"github.com/kedarnag13/Home_Automation/api/v1/models"
 	"io/ioutil"
-	"log"
+	// "log"
 	"net/http"
 	// "time"
 )
@@ -21,7 +21,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	body, err := ioutil.ReadAll(req.Body)
 
 	var tv models.Remote
-
+	var event lirc.Event
 	if err != nil {
 		panic(err)
 	}
@@ -36,8 +36,8 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
 
-	ir.Handle("", "KEY_POWER", keyPower)
-	go ir.Run()
+	// ir.Handle("", "KEY_POWER", keyPower(tv.Key_code, tv.Key_name))
+
 	// ir.Handle("", "KEY_POWER", func keyPower(tv.Key_code, tv.Key_name))
 	// ir.Handle("", "KEY POWER", func(w http.ResponseWriter, r *http.Request) {
 	// 	keyPower(w, r, tv.Key_code, tv.Key_name)
@@ -80,11 +80,16 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// 	}
 
 	// }
+	code, name := keyPower(event, tv.Key_code, tv.Key_name)
+	fmt.Println("Code:", code)
+	fmt.Println("Name:", name)
+	go ir.Run()
 }
 
-func keyPower(event lirc.Event) {
+func keyPower(event lirc.Event, code string, name string) (string, string) {
 	fmt.Println("Event:", event)
 	fmt.Println("Power Key Pressed")
+	return code, name
 }
 
 // func keyPower(event lirc.Event, write http.ResponseWriter, read *http.Request, code string, name string) {
