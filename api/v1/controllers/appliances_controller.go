@@ -20,7 +20,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 
 	body, err := ioutil.ReadAll(req.Body)
 
-	var tv models.Tv
+	var tv models.Remote
 
 	if err != nil {
 		panic(err)
