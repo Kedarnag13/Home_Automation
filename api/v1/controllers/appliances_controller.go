@@ -84,6 +84,10 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	fmt.Println("Code:", code)
 	fmt.Println("Name:", name)
 	go ir.Run()
+	err = ir.Send(event)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func keyPower(event lirc.Event, code string, name string) (string, string) {
