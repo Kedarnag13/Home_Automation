@@ -35,17 +35,20 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	}
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
+
+	ir.Handle("", "KEY_POWER", keyPower)
+	go ir.Run()
 	// ir.Handle("", "KEY_POWER", func keyPower(tv.Key_code, tv.Key_name))
 	// ir.Handle("", "KEY POWER", func(w http.ResponseWriter, r *http.Request) {
 	// 	keyPower(w, r, tv.Key_code, tv.Key_name)
 	// })
-	go ir.Run()
-	reply := ir.Command(`LIST micromax ""`)
-	fmt.Println(reply.DataLength, reply.Data)
-	err = ir.Send("micromax KEY_POWER")
-	if err != nil {
-		log.Println(err)
-	}
+	// go ir.Run()
+	// reply := ir.Command(`LIST micromax ""`)
+	// fmt.Println(reply.DataLength, reply.Data)
+	// err = ir.Send("micromax KEY_POWER")
+	// if err != nil {
+	// 	log.Println(err)
+	// }
 	// ir.Handle("", "KEY_1", key1(tv.Key_code, tv.Key_name))
 	// go ir.Run()
 	// samsung.EnableLogging = true
@@ -77,6 +80,11 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// 	}
 
 	// }
+}
+
+func keyPower(event lirc.Event) {
+	fmt.Println("Event:", event)
+	fmt.Println("Power Key Pressed")
 }
 
 // func keyPower(event lirc.Event, write http.ResponseWriter, read *http.Request, code string, name string) {
