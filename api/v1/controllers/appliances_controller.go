@@ -30,7 +30,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 		panic(err)
 	}
 	ir, err := lirc.Init("/var/run/lirc/lircd")
-	if err != nil {
+	if err != nil || ir == nil {
 		panic(err)
 	}
 	fmt.Printf("Code:%v", tv.Key_code)
