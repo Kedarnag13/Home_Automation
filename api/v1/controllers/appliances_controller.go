@@ -35,14 +35,10 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	}
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
-	power_code, power_name := keyPower(tv.Key_code, tv.Key_name)
-	if err != nil || power_code == nil || power_name == nil {
-		panic(err)
-	}
-	ir.Handle("", "KEY_POWER", power_code, power_name)
-	// ir.Handle("", func(w http.ResponseWriter, r *http.Request) {
-	// 	keyPower(w, r, tv.Key_code, tv.Key_name)
-	// })
+	// ir.Handle("", "KEY_POWER", func keyPower(tv.Key_code, tv.Key_name))
+	ir.Handle("", func(w http.ResponseWriter, r *http.Request) {
+		keyPower(w, r, tv.Key_code, tv.Key_name)
+	})
 	go ir.Run()
 	// ir.Handle("", "KEY_1", key1(tv.Key_code, tv.Key_name))
 	// go ir.Run()
@@ -81,7 +77,6 @@ func keyPower(event lirc.Event, code string, name string) {
 	fmt.Println("Code:%v", code)
 	fmt.Println("Name:%v", name)
 	log.Println("Power Key Pressed")
-	return code, name
 }
 
 func key1(event lirc.Event, code string, name string) {
