@@ -2,7 +2,11 @@ package controllers
 
 import (
 	// "github.com/ninjasphere/go-samsung-tv"
+	"encoding/json"
+	"fmt"
 	"github.com/chbmuc/lirc"
+	"github.com/kedarnag13/Home_Automation/api/v1/models"
+	"io/ioutil"
 	"log"
 	"net/http"
 	// "time"
@@ -27,10 +31,12 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	if err != nil {
 		panic(err)
 	}
-	ir.Handle("", "KEY_POWER", keyPower(tv.Key_code, tv.Key_name))
-	go ir.Run()
-	ir.Handle("", "KEY_1", key1(tv.Key_code, tv.Key_name))
-	go ir.Run()
+	fmt.Printf("Code:%v", tv.Key_code)
+	fmt.Printf("Name:%v", tv.Key_name)
+	// ir.Handle("", "KEY_POWER", keyPower(tv.Key_code, tv.Key_name))
+	// go ir.Run()
+	// ir.Handle("", "KEY_1", key1(tv.Key_code, tv.Key_name))
+	// go ir.Run()
 	// samsung.EnableLogging = true
 	// tv := samsung.TV{
 	// 	Host:            "192.168.1.21",
