@@ -36,7 +36,10 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
 	// ir.Handle("", "KEY_POWER", keyPower(tv.Key_code, tv.Key_name))
-	// go ir.Run()
+	ir.HandleFunc("", func(w http.ResponseWriter, r *http.Request) {
+		keyPower(w, r, tv.Key_code, tv.Key_name)
+	})
+	go ir.Run()
 	// ir.Handle("", "KEY_1", key1(tv.Key_code, tv.Key_name))
 	// go ir.Run()
 	// samsung.EnableLogging = true
