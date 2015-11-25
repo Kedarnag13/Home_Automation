@@ -13,13 +13,23 @@ type AppliancesController struct{}
 var Appliances AppliancesController
 
 func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Request) {
+
+	var tv models.Tv
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		panic(err)
+	}
+	err = json.Unmarshal(body, &tv)
+	if err != nil {
+		panic(err)
+	}
 	ir, err := lirc.Init("/var/run/lirc/lircd")
 	if err != nil {
 		panic(err)
 	}
-	ir.Handle("", "KEY_POWER", keyPower)
+	ir.Handle("", "KEY_POWER", keyPower(tv.Key_code, tv.Key_name))
 	go ir.Run()
-	ir.Handle("", "KEY_1", key1)
+	ir.Handle("", "KEY_1", key1(tv.Key_code, tv.Key_name))
 	go ir.Run()
 	// samsung.EnableLogging = true
 	// tv := samsung.TV{
@@ -52,10 +62,14 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// }
 }
 
-func keyPower(event lirc.Event) {
+func keyPower(event lirc.Event, code string, name string) {
+	fmt.Println("Code:%v", code)
+	fmt.Println("Name:%v", name)
 	log.Println("Power Key Pressed")
 }
 
-func key1(event lirc.Event) {
+func key1(event lirc.Event, code string, name string) {
+	fmt.Println("Code:%v", code)
+	fmt.Println("Name:%v", name)
 	log.Println("Key 1 Pressed")
 }

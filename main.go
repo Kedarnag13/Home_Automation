@@ -13,7 +13,7 @@ func main() {
 	r.HandleFunc("/upload", controllers.File.Upload).Methods("POST")
 	r.HandleFunc("/get_weather_information", controllers.Weather.Get_information).Methods("GET")
 	r.HandleFunc("/monitor_temp_humidity", controllers.Temp.Monitor_temperature_humidity).Methods("GET")
-	r.HandleFunc("/control", controllers.Appliances.Control_tv).Methods("GET")
+	r.HandleFunc("/control_tv", controllers.Appliances.Control_tv).Methods("POST")
 	// r.HandleFunc("/monitor_wind_speed/{latitude:[0-9./0-9]+}/{longitude:[0-9./0-9]+}", controllers.Wind.Monitor_wind_velocity).Methods("GET")
 	// filename := "/Users/kedarnag/Desktop/ROR - Training Material.docx"
 	// postFile(filename, "0.0.0.0:3000")
