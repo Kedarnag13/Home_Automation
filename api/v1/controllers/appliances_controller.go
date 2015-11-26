@@ -35,15 +35,13 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	}
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
-
-	reply := ir.Command(`LIST micromax ""`)
-	fmt.Println(reply.DataLength, reply.Data)
+	ir.Handle("", "KEY_POWER", keyPower)
 
 	err = ir.Send("micromax KEY_POWER")
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = ir.SendLong("micromax KEY1", time.Duration(time.Second*3))
+	err = ir.SendLong("micromax KEY_POWER", time.Duration(time.Second*3))
 	if err != nil {
 		fmt.Println(err)
 	}
