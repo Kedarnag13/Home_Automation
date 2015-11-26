@@ -36,7 +36,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
 	ir.Handle("", "KEY_POWER", keyPower)
-
+	ir.Run()
 	err = ir.Send("micromax KEY_POWER")
 	if err != nil {
 		fmt.Println(err)
