@@ -21,9 +21,9 @@ func main() {
 	// target_url := "http://localhost:9090/upload"
 
 	// HTTP Listening Port Raspberry Pi
-	// log.Println("main : Started : Listening on: http://192.168.2.112:3000 ...")
-	// log.Fatal(http.ListenAndServe("192.168.2.112:3000", nil))
+	log.Println("main : Started : Listening on: http://192.168.2.112:3000 ...")
+	log.Fatal(http.ListenAndServe("192.168.2.112:3000", nil))
 	// Localhost
-	log.Println("main : Started : Listening on: http://0.0.0.0:3000 ...")
-	log.Fatal(http.ListenAndServe("0.0.0.0:3000", nil))
+	// log.Println("main : Started : Listening on: http://0.0.0.0:3000 ...")
+	// log.Fatal(http.ListenAndServe("0.0.0.0:3000", nil))
 }
