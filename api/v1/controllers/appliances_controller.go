@@ -36,14 +36,14 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
 
-	reply := ir.Command(`LIST DenonTuner ""`)
+	reply := ir.Command(`LIST micromax ""`)
 	fmt.Println(reply.DataLength, reply.Data)
 
-	err = ir.Send("DenonTuner PROG-SCAN")
+	err = ir.Send("micromax PROG-SCAN")
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = ir.SendLong("DenonTuner VOL-DOWN", time.Duration(time.Second*3))
+	err = ir.SendLong("micromax VOL-DOWN", time.Duration(time.Second*3))
 	if err != nil {
 		fmt.Println(err)
 	}
