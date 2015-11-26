@@ -80,7 +80,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// 	}
 
 	// }
-	code, name := keyPower(event, tv.Key_code, tv.Key_name, tv.Remote_name)
+	code, name := keyPower(event lirc.Event, tv.Key_code, tv.Key_name, tv.Remote_name)
 	fmt.Println("Code:", code)
 	fmt.Println("Name:", name)
 	go ir.Run()
