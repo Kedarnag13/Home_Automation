@@ -21,7 +21,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	body, err := ioutil.ReadAll(req.Body)
 
 	var tv models.Remote
-	var event lirc.Event
+	// var event lirc.Event
 	if err != nil {
 		panic(err)
 	}
@@ -35,6 +35,18 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	}
 	fmt.Printf("Code:%v", tv.Key_code)
 	fmt.Printf("Name:%v", tv.Key_name)
+
+	reply := ir.Command(`LIST DenonTuner ""`)
+	fmt.Println(reply.DataLength, reply.Data)
+
+	err = ir.Send("DenonTuner PROG-SCAN")
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = ir.SendLong("DenonTuner VOL-DOWN", time.Duration(time.Second*3))
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	// ir.Handle("", "KEY_POWER", keyPower(tv.Key_code, tv.Key_name))
 
@@ -80,21 +92,33 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// 	}
 
 	// }
-	code, name := keyPower(event, tv.Key_code, tv.Key_name, tv.Remote_name)
-	fmt.Println("Code:", code)
-	fmt.Println("Name:", name)
-	go ir.Run()
-	err = ir.Send("micromax KEY_POWER")
-	if err != nil {
-		fmt.Println(err)
-	}
+	// code, name := keyPower(event, tv.Key_code, tv.Key_name, tv.Remote_name)
+	// fmt.Println("Code:", code)
+	// fmt.Println("Name:", name)
+	// go ir.Run()
+	// err = ir.Send("micromax KEY_POWER")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 }
 
-func keyPower(event lirc.Event, code string, name string, rname string) (string, string) {
-	fmt.Println("Event:", event)
+func keyPower(event lirc.Event) {
 	fmt.Println("Power Key Pressed")
-	return code, name
 }
+
+func keyTV(event lirc.Event) {
+	fmt.Println("TV Key Pressed")
+}
+
+func keyAll(event lirc.Event) {
+	fmt.Println(event)
+}
+
+// func keyPower(event lirc.Event, code string, name string, rname string) (string, string) {
+// 	fmt.Println("Event:", event)
+// 	fmt.Println("Power Key Pressed")
+// 	return code, name
+// }
 
 // func keyPower(event lirc.Event, write http.ResponseWriter, read *http.Request, code string, name string) {
 // 	fmt.Println(write, read)
