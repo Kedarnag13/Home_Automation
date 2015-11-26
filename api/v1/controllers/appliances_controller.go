@@ -80,7 +80,7 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	// 	}
 
 	// }
-	code, name := keyPower(event lirc.Event, tv.Key_code, tv.Key_name, tv.Remote_name)
+	code, name := keyPower(event, tv.Key_code, tv.Key_name, tv.Remote_name)
 	fmt.Println("Code:", code)
 	fmt.Println("Name:", name)
 	go ir.Run()
@@ -90,8 +90,8 @@ func (a *AppliancesController) Control_tv(rw http.ResponseWriter, req *http.Requ
 	}
 }
 
-func keyPower(eve, code string, name string, rname string) (string, string) {
-	fmt.Println("Event:", eve)
+func keyPower(event lirc.Event, code string, name string, rname string) (string, string) {
+	fmt.Println("Event:", event)
 	fmt.Println("Power Key Pressed")
 	return code, name
 }
